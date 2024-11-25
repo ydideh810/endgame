@@ -6,6 +6,17 @@ export interface Message {
   timestamp: number;
 }
 
+export interface Prompt {
+  id: string;
+  title: string;
+  content: string;
+  category: 'creative' | 'technical' | 'brainstorming' | 'roleplay';
+  tags: string[];
+  userId: string;
+  createdAt: number;
+  upvotes: number;
+}
+
 export interface Achievement {
   id: string;
   name: string;
