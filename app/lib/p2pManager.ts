@@ -1,4 +1,6 @@
-import Peer from 'peerjs';
+'use client';
+
+import { DataConnection, Peer } from 'peerjs';
 import { Message } from './types';
 
 export interface EncryptedConversation {
@@ -10,7 +12,7 @@ export interface EncryptedConversation {
 
 class P2PManager {
   private peer: Peer | null = null;
-  private connections: Map<string, Peer.DataConnection> = new Map();
+  private connections: Map<string, DataConnection> = new Map();
 
   async initialize(): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -37,7 +39,7 @@ class P2PManager {
     });
   }
 
-  private handleConnection(conn: Peer.DataConnection) {
+  private handleConnection(conn: DataConnection) {
     this.connections.set(conn.peer, conn);
 
     conn.on('data', async (data: any) => {
