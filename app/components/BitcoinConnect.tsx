@@ -1,29 +1,11 @@
 'use client';
+
 import dynamic from 'next/dynamic';
 import { useEffect, useState, useCallback } from 'react';
-import { Bitcoin, Wallet } from 'lucide-react';
+import { Wallet } from 'lucide-react';
+import type { WebLNProvider } from '../lib/types';
 
-// Define WebLN types
-declare global {
-  interface Window {
-    webln?: {
-      enable: () => Promise<void>;
-      getInfo: () => Promise<{
-        node?: {
-          pubkey?: string;
-        };
-      }>;
-    };
-  }
-}
-
-// Define the Button props type
-interface ButtonProps {
-  // Add any props that the Button component actually accepts
-  // based on the @getalby/bitcoin-connect-react documentation
-}
-
-const Button = dynamic<ButtonProps>(
+const Button = dynamic(
   () => import('@getalby/bitcoin-connect-react').then((mod) => mod.Button),
   { ssr: false }
 );
@@ -71,16 +53,20 @@ export function BitcoinConnect({ onConnect }: BitcoinConnectProps) {
   if (isConnected) {
     return (
       <div className="text-[#ff0000] flex items-center gap-2">
-        <Bitcoin size={16} />
+        <Wallet size={16} />
         Connected
+        <div className="text-[#ff0000]/70 text-xs ml-2">
+          573 sats per command
+        </div>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col items-center gap-2">
-      {/* Remove the className prop from Button */}
-      <Button />
+      <Button 
+        className="w-full py-2 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2"
+      />
       <button
         onClick={handleLaunchModal}
         className="w-full py-2 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2"
@@ -88,7 +74,12 @@ export function BitcoinConnect({ onConnect }: BitcoinConnectProps) {
         <Wallet size={16} />
         Connect Wallet
       </button>
-      {error && <div className="text-[#ff0000] text-xs mt-2">{error}</div>}
+      {error && (
+        <div className="text-[#ff0000] text-xs mt-2">
+          {error}
+        </div>
+      )}
+     
     </div>
   );
 }
