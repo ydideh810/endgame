@@ -17,7 +17,13 @@ declare global {
   }
 }
 
-const Button = dynamic(
+// Define the Button props type
+interface ButtonProps {
+  // Add any props that the Button component actually accepts
+  // based on the @getalby/bitcoin-connect-react documentation
+}
+
+const Button = dynamic<ButtonProps>(
   () => import('@getalby/bitcoin-connect-react').then((mod) => mod.Button),
   { ssr: false }
 );
@@ -73,7 +79,8 @@ export function BitcoinConnect({ onConnect }: BitcoinConnectProps) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <Button className="w-full py-2 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2" />
+      {/* Remove the className prop from Button */}
+      <Button />
       <button
         onClick={handleLaunchModal}
         className="w-full py-2 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2"
