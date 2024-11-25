@@ -1,7 +1,7 @@
 'use client';
 
 import { encode } from 'gpt-tokenizer';
-import type { WebLNProvider } from './types';
+import type { WebLNProvider, PaymentResult } from './types';
 
 export interface PaymentPlan {
   id: string;
@@ -26,11 +26,7 @@ class PaymentManager {
     this.loadCredits();
   }
 
-  public async makePayment(amount: number, memo: string): Promise<{
-    success: boolean;
-    error?: string;
-    preimage?: string;
-  }> {
+  public async makePayment(amount: number, memo: string): Promise<PaymentResult> {
     if (!amount || amount <= 0) {
       return {
         success: false,
@@ -150,5 +146,3 @@ class PaymentManager {
     return true;
   }
 }
-
-export const paymentManager = new PaymentManager();
