@@ -89,10 +89,7 @@ export function PaymentDialog({ isOpen, onClose, onSuccess }: PaymentDialogProps
             
             {!isWalletConnected && (
               <div className="mb-4">
-                <Button 
-                  onConnect={() => setIsWalletConnected(true)}
-                  className="w-full py-2 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10"
-                />
+                <Button onConnect={() => setIsWalletConnected(true)} />
               </div>
             )}
 
