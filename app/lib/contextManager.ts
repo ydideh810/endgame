@@ -1,3 +1,5 @@
+'use client';
+
 import { ConversationContext, UserPreference } from './types';
 
 class ContextManager {
@@ -54,9 +56,10 @@ class ContextManager {
       prefs.communicationStyle = 'technical';
     }
 
-    // Update topics
+    // Update topics using Array.from instead of spread operator
     const detectedTopics = this.extractTopics(message);
-    prefs.topics = [...new Set([...prefs.topics, ...detectedTopics])].slice(-this.MAX_HISTORY);
+    const uniqueTopics = Array.from(new Set([...prefs.topics, ...detectedTopics]));
+    prefs.topics = uniqueTopics.slice(-this.MAX_HISTORY);
 
     // Update interaction history
     prefs.lastInteractions = [message, ...prefs.lastInteractions].slice(0, this.MAX_HISTORY);
@@ -80,7 +83,7 @@ class ContextManager {
       .filter(word => word.length > 4)
       .filter(word => !['would', 'could', 'please', 'thank'].includes(word));
     
-    return [...new Set(keywords)];
+    return Array.from(new Set(keywords));
   }
 
   public getSystemPrompt(): string {
