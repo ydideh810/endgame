@@ -8,7 +8,7 @@ export default function Home() {
     <main className="min-h-screen bg-black p-4">
       <div className="terminal-frame w-full h-[98vh] relative">
         <div className="absolute top-4 left-6 terminal-text flex items-center gap-2">
-          <span className="text-[#ff0000]">></span> N.I.D.A.M V1.0
+          <span className="text-[#ff0000]">{`>`}</span> N.I.D.A.M OS V1.0
         </div>
         <div className="absolute top-4 right-6 terminal-text">
           SYSTEM ACTIVE
