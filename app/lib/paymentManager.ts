@@ -146,3 +146,6 @@ class PaymentManager {
     return true;
   }
 }
+
+// Create and export a singleton instance
+export const paymentManager = new PaymentManager();
