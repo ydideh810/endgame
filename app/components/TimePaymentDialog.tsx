@@ -226,11 +226,9 @@ export function TimePaymentDialog({
               <div className="space-y-2">
                 {paymentMethod === 'bitcoin' ? (
                   !isWalletConnected ? (
-                    <Button 
-                      onConnect={() => {}}
-                      text="Connect Wallet"
-                      className="w-full py-3 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2"
-                    />
+                    <div className="w-full py-3 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2">
+                      <Button onConnect={() => {}} />
+                    </div>
                   ) : (
                     <button
                       onClick={handleBitcoinPurchase}
