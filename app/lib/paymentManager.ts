@@ -71,7 +71,8 @@ class PaymentManager {
         throw new Error('Payment verification failed');
       }
 
-      this.addCredits(amount);
+      this.credits += amount;
+      this.saveCredits();
       
       return {
         success: true,
@@ -128,11 +129,6 @@ class PaymentManager {
     }
   }
 
-  private addCredits(amount: number): void {
-    this.credits += amount;
-    this.saveCredits();
-  }
-
   public getCredits(): number {
     return this.credits;
   }
@@ -143,6 +139,15 @@ class PaymentManager {
 
   public getMaxContextTokens(): number {
     return this.MAX_CONTEXT_TOKENS;
+  }
+
+  public getCreditId(): string {
+    return `NIDAM-${Date.now().toString(36).toUpperCase()}`;
+  }
+
+  public async retrieveCreditsByMemo(memo: string): Promise<boolean> {
+    // Implementation for credit retrieval
+    return true;
   }
 }
 
