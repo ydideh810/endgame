@@ -1,8 +1,21 @@
 'use client';
-
 import dynamic from 'next/dynamic';
 import { useEffect, useState, useCallback } from 'react';
 import { Bitcoin, Wallet } from 'lucide-react';
+
+// Define WebLN types
+declare global {
+  interface Window {
+    webln?: {
+      enable: () => Promise<void>;
+      getInfo: () => Promise<{
+        node?: {
+          pubkey?: string;
+        };
+      }>;
+    };
+  }
+}
 
 const Button = dynamic(
   () => import('@getalby/bitcoin-connect-react').then((mod) => mod.Button),
