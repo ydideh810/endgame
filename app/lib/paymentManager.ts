@@ -3,6 +3,12 @@
 import { encode } from 'gpt-tokenizer';
 import type { WebLNProvider, PaymentResult } from './types';
 
+declare global {
+  interface Window {
+    webln?: WebLNProvider;
+  }
+}
+
 export interface PaymentPlan {
   id: string;
   name: string;
