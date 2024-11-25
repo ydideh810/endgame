@@ -29,7 +29,7 @@ export function PaymentDialog({ isOpen, onClose, onSuccess }: PaymentDialogProps
     setError(null);
 
     try {
-      const result = await paymentManager.addCredits(amount);
+      const result = await paymentManager.makePayment(amount, 'N.I.D.A.M Credits Purchase');
       if (result.success) {
         onSuccess();
         onClose();
