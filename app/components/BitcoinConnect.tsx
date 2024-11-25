@@ -64,9 +64,9 @@ export function BitcoinConnect({ onConnect }: BitcoinConnectProps) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <Button 
-        className="w-full py-2 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2"
-      />
+      <div className="w-full py-2 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2">
+        <Button />
+      </div>
       <button
         onClick={handleLaunchModal}
         className="w-full py-2 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2"
@@ -79,7 +79,6 @@ export function BitcoinConnect({ onConnect }: BitcoinConnectProps) {
           {error}
         </div>
       )}
-     
     </div>
   );
 }
