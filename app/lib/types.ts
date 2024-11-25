@@ -1,4 +1,11 @@
 // Previous type definitions remain
+export interface Message {
+  id: number;
+  text: string;
+  sender: 'user' | 'system';
+  timestamp: number;
+}
+
 export interface Achievement {
   id: string;
   name: string;
