@@ -1,18 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import {
-  Timer,
-  X,
-  Wallet,
-  Bitcoin,
-  CreditCard,
-  Key,
-  Upload,
-  Image,
-  UserCircle2,
-  Clock,
-} from 'lucide-react';
+import { Timer, X, Wallet, CreditCard, Key, Upload, Image, UserCircle2, Clock } from 'lucide-react';
 import { Button } from '@getalby/bitcoin-connect-react';
 import { paymentManager } from '../lib/paymentManager';
 import { guestTrialManager } from '../lib/guestTrialManager';
@@ -26,40 +15,20 @@ interface TimePaymentDialogProps {
 }
 
 const TIME_PACKAGES = [
-  { duration: 5, price: 2000, priceUSD: 3, label: '5 min', productId: '2wOUu' },
-  {
-    duration: 10,
-    price: 4000,
-    priceUSD: 5,
-    label: '10 min',
-    productId: 'cThEx',
-  },
-  {
-    duration: 30,
-    price: 6000,
-    priceUSD: 7,
-    label: '30 min',
-    productId: 'CAtN2',
-  },
-  {
-    duration: 60,
-    price: 10000,
-    priceUSD: 10,
-    label: '60 min',
-    productId: 'Dm7O3',
-  },
+  { duration: 3, price: 573, priceUSD: 0.25, label: '3 min', productId: '2wOUu' },
+  { duration: 5, price: 873, priceUSD: 0.35, label: '5 min', productId: 'cThEx' },
+  { duration: 10, price: 1573, priceUSD: 0.60, label: '10 min', productId: 'CAtN2' },
+  { duration: 30, price: 3573, priceUSD: 1.25, label: '30 min', productId: 'Dm7O3' }
 ];
 
-export function TimePaymentDialog({
-  isOpen,
-  onClose,
+export function TimePaymentDialog({ 
+  isOpen, 
+  onClose, 
   onPurchaseSuccess,
-  isWalletConnected,
+  isWalletConnected 
 }: TimePaymentDialogProps) {
   const [selectedPackage, setSelectedPackage] = useState(TIME_PACKAGES[0]);
-  const [paymentMethod, setPaymentMethod] = useState<'bitcoin' | 'card'>(
-    'bitcoin'
-  );
+  const [paymentMethod, setPaymentMethod] = useState<'bitcoin' | 'card'>('bitcoin');
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [licenseKey, setLicenseKey] = useState('');
@@ -99,10 +68,9 @@ export function TimePaymentDialog({
       }
     } catch (err) {
       console.error('Payment error:', err);
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'Payment system error - please try again'
+      setError(err instanceof Error ? 
+        err.message : 
+        'Payment system error - please try again'
       );
     } finally {
       setIsProcessing(false);
@@ -142,9 +110,8 @@ export function TimePaymentDialog({
       return;
     }
 
-    const isValidFormat =
-      /^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/.test(licenseKey);
-
+    const isValidFormat = /^[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}-[A-Z0-9]{5}$/.test(licenseKey);
+    
     if (!isValidFormat) {
       setError('Please enter the key in format: XXXXX-XXXXX-XXXXX-XXXXX');
       return;
@@ -161,7 +128,7 @@ export function TimePaymentDialog({
         licenseKey,
         productId: selectedPackage.productId,
         proofImage,
-        timestamp: Date.now(),
+        timestamp: Date.now()
       });
 
       onPurchaseSuccess(selectedPackage.duration * 60);
@@ -174,11 +141,7 @@ export function TimePaymentDialog({
 
   const handleGuestAccess = () => {
     if (!trialInfo.isAvailable) {
-      setError(
-        `Trial not available. Please wait ${guestTrialManager.formatCooldown(
-          trialInfo.remainingCooldown
-        )}`
-      );
+      setError(`Trial not available. Please wait ${guestTrialManager.formatCooldown(trialInfo.remainingCooldown)}`);
       return;
     }
 
@@ -197,7 +160,10 @@ export function TimePaymentDialog({
             <Timer className="w-5 h-5" />
             Purchase Access Time
           </h2>
-          <button onClick={onClose} className="text-[#ff0000] hover:opacity-80">
+          <button 
+            onClick={onClose}
+            className="text-[#ff0000] hover:opacity-80"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -212,12 +178,10 @@ export function TimePaymentDialog({
                     setError(null);
                   }}
                   className={`flex items-center gap-2 px-4 py-2 border border-[#ff0000] ${
-                    paymentMethod === 'bitcoin'
-                      ? 'bg-[#ff0000] text-black'
-                      : 'text-[#ff0000]'
+                    paymentMethod === 'bitcoin' ? 'bg-[#ff0000] text-black' : 'text-[#ff0000]'
                   }`}
                 >
-                  <Bitcoin size={16} />
+                  <Wallet size={16} />
                   Bitcoin
                 </button>
                 <button
@@ -226,9 +190,7 @@ export function TimePaymentDialog({
                     setError(null);
                   }}
                   className={`flex items-center gap-2 px-4 py-2 border border-[#ff0000] ${
-                    paymentMethod === 'card'
-                      ? 'bg-[#ff0000] text-black'
-                      : 'text-[#ff0000]'
+                    paymentMethod === 'card' ? 'bg-[#ff0000] text-black' : 'text-[#ff0000]'
                   }`}
                 >
                   <CreditCard size={16} />
@@ -245,16 +207,17 @@ export function TimePaymentDialog({
                       setError(null);
                     }}
                     className={`p-4 border border-[#ff0000] font-mono text-sm ${
-                      selectedPackage.duration === pkg.duration
-                        ? 'bg-[#ff0000] text-black'
+                      selectedPackage.duration === pkg.duration 
+                        ? 'bg-[#ff0000] text-black' 
                         : 'text-[#ff0000]'
                     }`}
                   >
                     <div className="text-lg mb-1">{pkg.label}</div>
                     <div>
-                      {paymentMethod === 'bitcoin'
+                      {paymentMethod === 'bitcoin' 
                         ? `${pkg.price} sats`
-                        : `$${pkg.priceUSD.toFixed(2)}`}
+                        : `$${pkg.priceUSD.toFixed(2)}`
+                      }
                     </div>
                   </button>
                 ))}
@@ -263,22 +226,18 @@ export function TimePaymentDialog({
               <div className="space-y-2">
                 {paymentMethod === 'bitcoin' ? (
                   !isWalletConnected ? (
-                    <Button
+                    <Button 
                       onConnect={() => {}}
+                      text="Connect Wallet"
                       className="w-full py-3 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 flex items-center justify-center gap-2"
-                    >
-                      <Wallet size={16} />
-                      Connect Wallet
-                    </Button>
+                    />
                   ) : (
                     <button
                       onClick={handleBitcoinPurchase}
                       disabled={isProcessing}
                       className="w-full py-3 border border-[#ff0000] text-[#ff0000] font-mono hover:bg-[#ff0000]/10 disabled:opacity-50"
                     >
-                      {isProcessing
-                        ? 'Processing...'
-                        : `Purchase ${selectedPackage.duration} minutes`}
+                      {isProcessing ? 'Processing...' : `Purchase ${selectedPackage.duration} minutes`}
                     </button>
                   )
                 ) : (
@@ -303,10 +262,7 @@ export function TimePaymentDialog({
                   ) : (
                     <>
                       <Clock size={16} />
-                      Trial available in{' '}
-                      {guestTrialManager.formatCooldown(
-                        trialInfo.remainingCooldown
-                      )}
+                      Trial available in {guestTrialManager.formatCooldown(trialInfo.remainingCooldown)}
                     </>
                   )}
                 </button>
@@ -323,11 +279,9 @@ export function TimePaymentDialog({
                 value={licenseKey}
                 onChange={(e) => {
                   const value = e.target.value.toUpperCase();
-                  const formatted =
-                    value
-                      .replace(/[^A-Z0-9]/g, '')
-                      .match(/.{1,5}/g)
-                      ?.join('-') || value;
+                  const formatted = value
+                    .replace(/[^A-Z0-9]/g, '')
+                    .match(/.{1,5}/g)?.join('-') || value;
                   setLicenseKey(formatted.slice(0, 23));
                 }}
                 placeholder="XXXXX-XXXXX-XXXXX-XXXXX"
@@ -355,9 +309,9 @@ export function TimePaymentDialog({
                 </button>
                 {proofImage && (
                   <div className="border border-[#ff0000] p-2">
-                    <img
-                      src={proofImage}
-                      alt="Proof of Payment"
+                    <img 
+                      src={proofImage} 
+                      alt="Proof of Payment" 
                       className="w-full h-auto"
                     />
                   </div>
